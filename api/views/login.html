@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Login</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+	</head>
+	<body>
+		<div class="container">
+
+			<form id="loginForm" class="well form-horizontal" action="/public/login" method="post">
+	<fieldset>
+	
+	<!-- Form Name -->
+	<legend><center><h2><b>Login Form</b></h2></center></legend><br>
+	
+	<!-- Text input-->
+
+	<!-- Text input-->
+	
+	<div class="form-group">
+		<label class="col-md-4 control-label">Username</label>  
+		<div class="col-md-4 inputGroupContainer">
+		<div class="input-group">
+		<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+		<input  name="username" placeholder="Username" class="form-control"  type="text">
+			</div>
+		</div>
+	</div>
+	
+	<!-- Text input-->
+	
+	<div class="form-group">
+		<label class="col-md-4 control-label" >Password</label> 
+			<div class="col-md-4 inputGroupContainer">
+			<div class="input-group">
+		<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+		<input name="password" placeholder="Password" class="form-control"  type="password">
+			</div>
+		</div>
+	</div>
+	
+	<!-- Text input-->
+	
+	<!-- Select Basic -->
+	
+	<!-- Success message -->
+	
+	<!-- Button -->
+	<div class="form-group">
+		<label class="col-md-4 control-label"></label>
+		<div class="col-md-4"><br>
+			&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<button type="submit" class="btn btn-warning" >&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspSUBMIT <span class="glyphicon glyphicon-send"></span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</button>
+		</div>
+	</div>
+	
+	</fieldset>
+	</form>
+	</div>
+			</div><!-- /.container -->
+		<script>
+			function logSubmit(event) {
+				event.preventDefault();
+				var form = $(this);
+				var url = form.attr('action');
+				$.ajax({
+							type: "POST",
+							url: url,
+							data: form.serialize(), // serializes the form's elements.
+							success: function(data)
+							{
+									if( data && data.token) {
+										localStorage.setItem("token", data.token);
+										window.location.href = `/public/home/?token=${data.token}`;
+									} else {
+										alert('Failed To Login User. Kindly contact support team', data.msg)
+									}
+							}
+						}); 
+			}
+
+			const form = document.getElementById("loginForm");
+			form.addEventListener("submit", logSubmit);
+		</script>
+	</body>
+</html>

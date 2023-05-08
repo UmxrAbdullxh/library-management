@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Add Book</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+	</head>
+	<body>
+		<div class="container">
+
+			<form id="registerForm" class="well form-horizontal" action="/private/addBook" method="post" >
+	<fieldset>
+	
+	<!-- Form Name -->
+	<legend><center><h2><b>Add Book</b></h2></center></legend><br>
+	
+	<!-- Text input-->
+
+	<!-- Text input-->
+	
+	<div class="form-group">
+		<label class="col-md-4 control-label">Title</label>  
+		<div class="col-md-4 inputGroupContainer">
+		<div class="input-group">
+		<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+		<input  name="title" placeholder="Title" class="form-control"  type="text">
+			</div>
+		</div>
+	</div>
+	
+	<!-- Text input-->
+	
+	<div class="form-group">
+		<label class="col-md-4 control-label" >ISBN</label> 
+			<div class="col-md-4 inputGroupContainer">
+			<div class="input-group">
+		<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+		<input name="isbn" placeholder="isbn" class="form-control"  type="text">
+			</div>
+		</div>
+	</div>
+	
+	<!-- Text input-->
+	
+	<div class="form-group">
+		<label class="col-md-4 control-label" >Author</label> 
+			<div class="col-md-4 inputGroupContainer">
+			<div class="input-group">
+		<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+		<input name="author" placeholder="Author" class="form-control"  type="text">
+			</div>
+		</div>
+	</div>
+	
+	<!-- Text input-->
+	
+		<div class="form-group"> 
+		<label class="col-md-4 control-label">Status</label>
+			<div class="col-md-4 selectContainer">
+			<div class="input-group">
+					<span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+			<select name="status" class="form-control selectpicker">
+				<option value="">Select status</option>
+				<option>available</option>
+				<option>issued</option>
+			</select>
+		</div>
+	  </div>
+	</div>
+	
+	<!-- Select Basic -->
+	
+	<!-- Success message -->
+	
+	<!-- Button -->
+	<div class="form-group">
+		<label class="col-md-4 control-label"></label>
+		<div class="col-md-4"><br>
+			&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<button id="submitBtn" type="submit" class="btn btn-warning" >&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspSUBMIT <span class="glyphicon glyphicon-send"></span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</button>
+		</div>
+	</div>
+	
+	</fieldset>
+	</form>
+	</div>
+			</div><!-- /.container -->
+		<script>
+			function logSubmit(event) {
+				console.log('=== [register.js]:: event ===', event , typeof(event));
+				// window.location.href = 'http://localhost:3300/public/getLogin'
+				event.preventDefault();
+				//e.preventDefault(); // avoid to execute the actual submit of the form.
+				var form = $(this);
+				var url = form.attr('action');
+        var token = localStorage.getItem("token");
+        console.log('=== [addUser.html]:: token ===', token , typeof(token));
+				$.ajax({
+							type: "POST",
+							url: url,
+							data: form.serialize(), // serializes the form's elements.
+              "headers": {
+                "Authorization": "Bearer " + token
+              },
+							success: function(data)
+							{
+                  console.log('=== [addBook.html]:: data ===', data , typeof(data));
+									if( data && data.book && data.book.id) {
+										alert('Book added Successfully.'); // show response 
+										window.location.href = "/private/books/?token=" + token;
+									} else {
+										alert('Failed To Add Book. Kindly contact support team')
+									}
+							}
+						}); 
+			}
+
+			const form = document.getElementById("registerForm");
+			form.addEventListener("submit", logSubmit);
+			// document.getElementById("submitBtn").addEventListener("click", myFunction);  
+      // function myFunction() {  
+      //   window.location.href="http://programminghead.com";  
+      // }
+		</script>
+	</body>
+</html>

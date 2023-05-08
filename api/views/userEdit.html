@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Login</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+	</head>
+	<body>
+		<div class="container">
+
+			<form id="editForm" class="well form-horizontal" action="/private/update" method="post">
+	<fieldset>
+	
+	<!-- Form Name -->
+	<legend><center><h2><b>Edit User</b></h2></center></legend><br>
+	
+	<!-- Text input-->
+
+	<!-- Text input-->
+	
+	<div class="form-group">
+		<label class="col-md-4 control-label">Username</label>  
+		<div class="col-md-4 inputGroupContainer">
+		<div class="input-group">
+		<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+		<input id="mainInput" numId="<%=user.id%>" name="username" placeholder="Username" class="form-control"  type="text" value="<%=user.username%>">
+			</div>
+		</div>
+	</div>
+	
+	<!-- Text input-->
+	
+	<div class="form-group">
+		<label class="col-md-4 control-label" >Password</label> 
+			<div class="col-md-4 inputGroupContainer">
+			<div class="input-group">
+		<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+		<input id="mainPass" name="password" placeholder="Password" class="form-control"  type="password">
+			</div>
+		</div>
+	</div>
+	
+	<!-- Text input-->
+	
+	<!-- Select Basic -->
+	
+	<!-- Success message -->
+	
+	<!-- Button -->
+	<div class="form-group">
+		<label class="col-md-4 control-label"></label>
+		<div class="col-md-4"><br>
+			&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<button type="submit" class="btn btn-warning" >&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspSUBMIT <span class="glyphicon glyphicon-send"></span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</button>
+		</div>
+	</div>
+	
+	</fieldset>
+	</form>
+	</div>
+			</div><!-- /.container -->
+		<script>
+			function logSubmit(event) {
+				event.preventDefault();
+        const token = localStorage.getItem("token");
+        const myAnchor = document.getElementById("mainInput") 
+        let id = myAnchor.getAttribute("numID");
+				var form = $(this);
+        var username = $("#mainInput").val();
+        var password = $("#mainPass").val();
+				var url = form.attr('action');
+        var formData = {
+          id: id,
+          username,
+          password
+        }
+				$.ajax({
+							type: "POST",
+							url: url,
+							data: formData, // serializes the form's elements.
+              "headers": {
+                "Authorization": "Bearer " + token
+              },
+							success: function(data)
+							{
+								console.log('=== [userEdit.html]:: data ===', data , typeof(data));
+                if( data && data.msg && data.msg == "Update succesfuul") {
+                  alert(data.msg);
+                  window.location.href = '/private/users/?token=' + token
+                } else {
+                  alert('Something went wrong. Kindly contact support team')
+                  window.location.href = '/private/users/?token=' + token
+                }
+							}
+						}); 
+			}
+
+			const form = document.getElementById("editForm");
+			form.addEventListener("submit", logSubmit);
+		</script>
+	</body>
+</html>
