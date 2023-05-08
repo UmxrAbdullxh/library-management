@@ -72,7 +72,7 @@
 							{
 									if( data && data.token) {
 										localStorage.setItem("token", data.token);
-										window.location.href = `/public/home/?token=${data.token}`;
+										window.location.href = `/private/home/?token=${data.token}`;
 									} else {
 										alert('Failed To Login User. Kindly contact support team', data.msg)
 									}

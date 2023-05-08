@@ -3,6 +3,7 @@
  */
 const bodyParser = require('body-parser');
 const express = require('express');
+var router = express.Router();
 const helmet = require('helmet');
 const http = require('http');
 const mapRoutes = require('express-routes-mapper');
@@ -52,6 +53,11 @@ app.use(bodyParser.json());
 app.all('/private/*', (req, res, next) => auth(req, res, next));
 
 // fill routes for express application
+/* GET home page. */
+app.get('/', function(req, res, next) {
+  res.render('index.html')
+});
+
 app.use('/public', mappedOpenRoutes);
 app.use('/private', mappedAuthRoutes);
 

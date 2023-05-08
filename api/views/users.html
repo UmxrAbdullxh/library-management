@@ -42,11 +42,12 @@
     <nav style="height: 52px;" class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-          <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+          <a class="nav-item nav-link active" onclick="getHome()" href="#">Home <span class="sr-only">(current)</span></a>
           <a id="getBooks" onclick="getBooks()" class="nav-item nav-link" href="/private/books">Books</a>
           <% if(userInfo.type == 'librarian') {%>
-            <a id="getUsers" class="nav-item nav-link" href="/private/users">Users</a>
+            <a id="getUsers" onclick="getUsers()" class="nav-item nav-link" href="/private/users">Users</a>
             <a id="addUsers" onclick="addUsers()" class="nav-item nav-link" href="/private/addUsers">Add Users</a>
+            <a id="addBooks" onclick="addBooks()" class="nav-item nav-link" href="/private/addBooks">Add Books</a>
           <% } %>
         </div>
       </div>
@@ -134,6 +135,27 @@
       var token = localStorage.getItem("token");
       console.log('=== [users.html]:: token ===', token , typeof(token));
       window.location.href = '/private/books/?token=' + token
+    }
+
+    function addBooks() {
+      event.preventDefault()
+      var token = localStorage.getItem("token");
+      console.log('=== [users.html]:: token ===', token , typeof(token));
+      window.location.href = '/private/addBooks/?token=' + token
+    }
+
+    function getUsers() {
+      event.preventDefault()
+      var token = localStorage.getItem("token");
+      console.log('=== [users.html]:: token ===', token , typeof(token));
+      window.location.href = '/private/users?token=' + token
+    }
+
+    function getHome() {
+      event.preventDefault()
+      var token = localStorage.getItem("token");
+      console.log('=== [users.html]:: token ===', token , typeof(token));
+      window.location.href = '/private/home?token=' + token
     }
   </script>
 </html>

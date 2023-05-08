@@ -9,6 +9,7 @@ const privateRoutes = {
   'POST /updateBook': 'BooksController.update',
   'POST /removeBook': 'BooksController.remove',
   'GET /addBooks': 'BooksController.add',
+  'GET /home': 'UserController.home',
 };
 
 module.exports = privateRoutes;

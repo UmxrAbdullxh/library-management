@@ -196,7 +196,8 @@ const UserController = () => {
   }
 
   const home = async (req, res) => {
-    console.log('=== [UserController.js]:: req.query ===', req.query , typeof(req.query));
+    let userInfo = req.userInfo
+    //console.log('=== [UserController.js]:: req.query ===', req.query , typeof(req.query));
     authService().verify(req.query.token, (err) => {
       if (err) {
         return {
@@ -205,7 +206,10 @@ const UserController = () => {
         }
       }
 
-      return res.render("home.html");
+      console.log('=== [UserController.js]:: userInfo ===', userInfo , typeof(userInfo));
+      return res.render("home.html", {
+        userInfo
+      });
     });
   }
 
